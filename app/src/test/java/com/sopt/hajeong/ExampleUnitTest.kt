@@ -1,4 +1,4 @@
-package org.sopt.sample
+package com.sopt.hajeong
 
 import org.junit.Test
 

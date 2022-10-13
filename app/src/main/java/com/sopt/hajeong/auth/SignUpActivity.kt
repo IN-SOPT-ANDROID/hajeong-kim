@@ -1,11 +1,10 @@
-package org.sopt.sample
+package com.sopt.hajeong.auth
 
 import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
-import org.sopt.sample.databinding.ActivitySignInBinding
 import org.sopt.sample.databinding.ActivitySignUpBinding
 
 class SignUpActivity : AppCompatActivity() {
