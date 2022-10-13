@@ -12,4 +12,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/main_menu" />
 
+    <ScrollView
+        android:id="@+id/sv_home"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/bnv_home"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/cv_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout="@layout/fragment_home" />
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

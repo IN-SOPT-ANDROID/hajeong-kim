@@ -56,9 +56,10 @@ class HomeFragment : Fragment() {
         homeAdapter.notifyDataSetChanged() //**리스트 업데이트를 알려줌
     }
 
+    /*//리사이클러뷰의 최상단으로 이동
     fun viewTop() {
         binding.rvHome.scrollToPosition(0)
-    }//리사이클러뷰의 최상단으로 이동
+    }*/
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
