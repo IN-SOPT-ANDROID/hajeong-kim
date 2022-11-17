@@ -1,16 +1,14 @@
 package com.sopt.hajeong.data
 
 import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.POST
 
-interface LoginService {
+interface AuthService {
     //로그인 API
     @POST("api/user/signin")
-    fun login(request: RequestLoginDTO): Call<ResponseLoginDTO>
-}
-
-interface SignupService{
+    fun login(@Body request: RequestLoginDTO): Call<ResponseLoginDTO>
     //회원가입 API
     @POST("api/user/signup")
-    fun signup(request: RequestSignupDTO): Call<ResponseSignupDTO>
+    fun signup(@Body request: RequestSignupDTO): Call<ResponseSignupDTO>
 }
