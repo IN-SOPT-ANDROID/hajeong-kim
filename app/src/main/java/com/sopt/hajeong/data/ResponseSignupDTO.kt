@@ -7,13 +7,11 @@ import kotlinx.serialization.Serializable
 data class ResponseSignupDTO(
     @SerialName("status")
     val status: Int,
-    @SerialName("success")
-    val success: Boolean,
     @SerialName("message")
     val message: String,
-    @SerialName("reuslt")
+    @SerialName("newUser")
     val result: User
-) {
+){
     @Serializable
     data class User(
         @SerialName("id")
