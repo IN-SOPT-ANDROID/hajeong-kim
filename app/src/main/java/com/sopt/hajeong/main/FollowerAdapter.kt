@@ -1,63 +1,45 @@
 package com.sopt.hajeong.main
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.sopt.hajeong.data.ResponseGetFollowerListDTO
 import org.sopt.sample.databinding.ItemHomeBodyBinding
-import org.sopt.sample.databinding.ItemHomeHeaderBinding
 
-class HomeAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val Header = 0
-    private val Body = 1
-    val userList = mutableListOf<UserData>()
+class FollowerAdapter(context: Context) : RecyclerView.Adapter<FollowerAdapter.BodyViewHolder>() {
+    private val inflater by lazy { LayoutInflater.from(context) }
+    private var followerList: List<ResponseGetFollowerListDTO.Follower> = emptyList()
 
-    override fun getItemViewType(position: Int): Int {
-        return if (position == 0) {
-            Header
-        } else Body
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):BodyViewHolder {
+        val binding = ItemHomeBodyBinding.inflate(inflater, parent, false)
+        return BodyViewHolder(binding)
     }
 
-    inner class HeaderViewHolder( //inner class: class 안에 class
-        private val binding: ItemHomeHeaderBinding
-    ) : RecyclerView.ViewHolder(binding.root) {}
 
-    inner class BodyViewHolder(
+    override fun onBindViewHolder(holder: BodyViewHolder, position: Int) {
+        holder.onBind(followerList[position])
+    }
+
+    override fun getItemCount(): Int = followerList.size
+
+    fun setFollowerList(followerList: List<ResponseGetFollowerListDTO.Follower>) {
+        this.followerList = followerList.toList()
+        notifyDataSetChanged() //갱신처리(리스트 업데이트)
+    }
+
+
+    class BodyViewHolder(
         private val binding: ItemHomeBodyBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun onBind(data: UserData) {
-            binding.ivProfile.setImageResource(data.image)
-            binding.tvName.text = data.name
-            binding.tvEmail.text = data.email
+        fun onBind(follower: ResponseGetFollowerListDTO.Follower) {
+            //Glide 라이브러리: 사진 로딩에 특화됨. 메모리 절약과 자연스러운 사진 로딩에 사용
+            Glide.with(this.binding.root)
+                .load(follower.avatar)
+                .into(binding.ivProfile)
+            binding.tvName.text=follower.firstName
+            binding.tvEmail.text=follower.email
         }
     }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        //val binding = LayoutGithubRepoBinding.inflate(inflater, parent, false)
-        //return RepoViewHolder(binding)
-        return when (viewType) {
-            Header -> {
-                val itemHomeHeaderBinding = ItemHomeHeaderBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                )
-                HeaderViewHolder(itemHomeHeaderBinding)
-            }
-            else -> {
-                val itemHomeBodyBinding =
-                    ItemHomeBodyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                BodyViewHolder(itemHomeBodyBinding)
-            }
-        }
-    }
-
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is BodyViewHolder) {
-            holder.onBind(userList[position])
-        } else if (holder is HeaderViewHolder) {
-            holder
-        }
-    }
-
-    override fun getItemCount(): Int = userList.size
 }
