@@ -25,9 +25,9 @@ class HomeAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private val binding: ItemHomeBodyBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun onBind(data: UserData) {
-            binding.ivCat.setImageResource(data.image)
-            binding.tvTitle.text = data.title
+            binding.ivProfile.setImageResource(data.image)
             binding.tvName.text = data.name
+            binding.tvEmail.text = data.email
         }
     }
 
