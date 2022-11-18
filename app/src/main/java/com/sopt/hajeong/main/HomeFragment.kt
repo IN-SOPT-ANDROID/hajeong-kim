@@ -1,20 +1,31 @@
 package com.sopt.hajeong.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.recyclerview.widget.GridLayoutManager
+import com.sopt.hajeong.data.ApiFactory
+import com.sopt.hajeong.data.ApiFactory.followerService
+import com.sopt.hajeong.data.FollowerService
+import com.sopt.hajeong.data.ResponseGetFollowerListDTO
 import org.sopt.sample.R
 import org.sopt.sample.databinding.FragmentHomeBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.http.Body
+import retrofit2.http.Header
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding: FragmentHomeBinding //var 불변변수 val 가변변수
         get() = _binding!!
-    private lateinit var homeAdapter: HomeAdapter
-    //lateinit: 지연초기화를 위해 필요
-    //중간에 접근할 때 초기화하기 위해 사용(앞에 선언했다해도 초기화를 미룰수 있음)
+    private val followerService: FollowerService = ApiFactory.followerService
 
     override fun onCreateView( //onCreateView: 뷰껍데기 만들기
         inflater: LayoutInflater,
@@ -22,51 +33,33 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        initAdapter()
         return binding.root
     }
 
-    private fun initAdapter() {
-        homeAdapter = HomeAdapter()
-        binding.rvHome.adapter = homeAdapter //homeAdapter를 rvHome(리사이클러뷰)과 연결
-        initUserData()
-    }
-
-    private fun initUserData(){
-        homeAdapter.userList.addAll(
-            listOf( //데이터 조작
-                UserData(0,"",""),
-                UserData(R.drawable.cat,"Android1","youngju"),
-                UserData(R.drawable.cat,"Android2","daehwan"),
-                UserData(R.drawable.cat,"Android3","hajeong"),
-                UserData(R.drawable.cat,"Android4","jieun"),
-                UserData(R.drawable.cat,"Android5","a"),
-                UserData(R.drawable.cat,"Android6","b"),
-                UserData(R.drawable.cat,"Android7","c"),
-                UserData(R.drawable.cat,"Android8","d"),
-                UserData(R.drawable.cat,"Android9","e"),
-                UserData(R.drawable.cat,"Android10","f"),
-                UserData(R.drawable.cat,"Android11","g"),
-                UserData(R.drawable.cat,"Android12","h"),
-                UserData(R.drawable.cat,"Android13","i"),
-                UserData(R.drawable.cat,"Android14","j"),
-                UserData(R.drawable.cat,"Android15","k")
-            )
-        )
-        homeAdapter.notifyDataSetChanged() //**리스트 업데이트를 알려줌
-    }
-
-    /*//리사이클러뷰의 최상단으로 이동
-    fun viewTop() {
-        binding.rvHome.scrollToPosition(0)
-    }*/
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        // 리사이클러뷰 어댑터
+        val adapter = FollowerAdapter(requireContext())
+        binding.rvHome.adapter = adapter
+        // 팔로워 목록 API 연결
+        followerService.getFollowerList().enqueue(object : Callback<ResponseGetFollowerListDTO> {
+            override fun onResponse(
+                call: Call<ResponseGetFollowerListDTO>,
+                response: Response<ResponseGetFollowerListDTO>
+            ) {
+                //get 성공
+                if (response.isSuccessful) {
+                    Log.e("success","서버는 성공임")
+                    response.body()?.let {
+                        adapter.setFollowerList(it.data)
+                    }
+                }
+            }
+            override fun onFailure(call: Call<ResponseGetFollowerListDTO>, t: Throwable) {
+                //get 실패(서버통신 오류)
+                Log.e("asdf", "message : " + t.message)
+            }
+        })
     }
 }
+
