@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-
         /*
         //홈 아이템을 다시 선택했을 때 다른 액션(최상단으로 이동) 추가 기능
         binding.bnvHome.setOnItemReselectedListener { item->
