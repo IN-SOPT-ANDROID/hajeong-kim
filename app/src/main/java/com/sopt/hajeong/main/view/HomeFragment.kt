@@ -5,21 +5,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
-import androidx.recyclerview.widget.GridLayoutManager
-import com.sopt.hajeong.data.ApiFactory
-import com.sopt.hajeong.data.ApiFactory.followerService
-import com.sopt.hajeong.data.FollowerService
-import com.sopt.hajeong.data.ResponseGetFollowerListDTO
-import org.sopt.sample.R
+import com.sopt.hajeong.data.api.ApiFactory
+import com.sopt.hajeong.data.api.FollowerService
+import com.sopt.hajeong.data.model.ResponseGetFollowerListDTO
+import com.sopt.hajeong.main.adapter.FollowerAdapter
 import org.sopt.sample.databinding.FragmentHomeBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.Header
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null

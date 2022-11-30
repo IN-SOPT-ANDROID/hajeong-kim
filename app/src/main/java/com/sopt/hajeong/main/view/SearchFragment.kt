@@ -1,4 +1,4 @@
-package com.sopt.hajeong.main
+package com.sopt.hajeong.main.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
