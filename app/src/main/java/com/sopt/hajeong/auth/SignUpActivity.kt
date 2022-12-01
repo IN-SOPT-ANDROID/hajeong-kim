@@ -1,16 +1,11 @@
 package com.sopt.hajeong.auth
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModel
+import androidx.core.view.isVisible
 import com.sopt.hajeong.main.viewmodel.SignUpViewModel
-import org.sopt.sample.R
-import org.sopt.sample.databinding.ActivityMainBinding
 import org.sopt.sample.databinding.ActivitySignUpBinding
 
 class SignUpActivity : AppCompatActivity() {
@@ -38,6 +33,12 @@ class SignUpActivity : AppCompatActivity() {
         viewModel.signupResult.observe(this) {
             startActivity(Intent(this@SignUpActivity, SignInActivity::class.java)) //화면전환
             finish()
+        }
+        viewModel.idLiveData.observe(this) {
+            binding.tvIdWarn.isVisible = !it
+        }
+        viewModel.pwLiveData.observe(this) {
+            binding.tvPwWarn.isVisible = !it
         }
     }
 }

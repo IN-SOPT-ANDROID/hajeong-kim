@@ -20,18 +20,22 @@ class SignUpViewModel : ViewModel() {
         get() = _signupResult
     private var authService = ApiFactory.authService
 
-    val inputId = MutableLiveData<String>()
-    val inputPw = MutableLiveData<String>()
+    val inputId = MutableLiveData("")
+    val inputPw = MutableLiveData("")
     val inputName = MutableLiveData("")
 
     val idLiveData: LiveData<Boolean> = Transformations.map(inputId) { inputId ->
-        Log.d("성공", "${inputId}")
-        checkId(inputId) }
+        val result = checkId(inputId)
+        Log.d("Nunu", result.toString())
+        result
+    }
     val pwLiveData: LiveData<Boolean> = Transformations.map(inputPw) { inputPw ->
-        checkPw(inputPw) }
+        checkPw(inputPw)
+    }
 
-    fun signup(email:String, pw:String, name:String){
-        authService.signup(RequestSignupDTO(email, pw, name)
+    fun signup(email: String, pw: String, name: String) {
+        authService.signup(
+            RequestSignupDTO(email, pw, name)
         ).enqueue(object : Callback<ResponseSignupDTO> {
             override fun onResponse(
                 call: Call<ResponseSignupDTO>,
@@ -42,17 +46,22 @@ class SignUpViewModel : ViewModel() {
                     _signupResult.value = response.body()
                 }
             }
+
             override fun onFailure(call: Call<ResponseSignupDTO>, t: Throwable) {
                 Log.d("서버 통신 실패", t.toString())
             }
         })
     }
+
     //정규표현식
     private fun checkId(id: String): Boolean {
-        return id.matches("^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z[0-9]].{6,10}$".toRegex()) || id.isNullOrEmpty()
+        Log.d("Nunu", id)
+        val regex = Regex("^[a-zA-Z0-9]{6,10}$")
+        return id.matches(regex) || id.isEmpty()
     }
 
     private fun checkPw(pw: String): Boolean {
-        return pw.matches("^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#\$%^&*])[A-Za-z[0-9]$!@#\$%^&*].{6,12}$".toRegex()) || pw.isNullOrEmpty()
+        val regexWithNumAndEngAndSpecificWord = Regex("^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#\$%^&*(),.?\":{}|<>]).{6,12}$")
+        return pw.matches(regexWithNumAndEngAndSpecificWord) || pw.isEmpty()
     }
 }
