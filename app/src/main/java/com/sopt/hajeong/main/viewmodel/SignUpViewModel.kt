@@ -26,11 +26,12 @@ class SignUpViewModel : ViewModel() {
 
     val idLiveData: LiveData<Boolean> = Transformations.map(inputId) { inputId ->
         val result = checkId(inputId)
-        Log.d("Nunu", result.toString())
+        Log.d("아이디", result.toString())
         result
     }
     val pwLiveData: LiveData<Boolean> = Transformations.map(inputPw) { inputPw ->
-        checkPw(inputPw)
+        val result = checkPw(inputPw)
+        result
     }
 
     fun signup(email: String, pw: String, name: String) {
@@ -55,7 +56,7 @@ class SignUpViewModel : ViewModel() {
 
     //정규표현식
     private fun checkId(id: String): Boolean {
-        Log.d("Nunu", id)
+        Log.d("아이디", id)
         val regex = Regex("^[a-zA-Z0-9]{6,10}$")
         return id.matches(regex) || id.isEmpty()
     }
