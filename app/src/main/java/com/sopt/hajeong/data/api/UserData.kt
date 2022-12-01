@@ -1,4 +1,4 @@
-package com.sopt.hajeong.main
+package com.sopt.hajeong.data.api
 
 data class UserData(
     val image: Int,

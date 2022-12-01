@@ -1,19 +1,14 @@
-package com.sopt.hajeong.main
+package com.sopt.hajeong.main.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.sopt.hajeong.data.api.ApiFactory
 import com.sopt.hajeong.data.api.FollowerService
-import com.sopt.hajeong.data.model.ResponseGetFollowerListDTO
 import com.sopt.hajeong.main.adapter.FollowerAdapter
 import org.sopt.sample.databinding.FragmentHomeBinding
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
@@ -33,27 +28,8 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // 리사이클러뷰 어댑터
-        val adapter = FollowerAdapter(requireContext())
+        val adapter = FollowerAdapter()
         binding.rvHome.adapter = adapter
-        // 팔로워 목록 API 연결
-        followerService.getFollowerList().enqueue(object : Callback<ResponseGetFollowerListDTO> {
-            override fun onResponse(
-                call: Call<ResponseGetFollowerListDTO>,
-                response: Response<ResponseGetFollowerListDTO>
-            ) {
-                //get 성공
-                if (response.isSuccessful) {
-                    Log.e("success","서버는 성공임")
-                    response.body()?.let {
-                        adapter.setFollowerList(it.data)
-                    }
-                }
-            }
-            override fun onFailure(call: Call<ResponseGetFollowerListDTO>, t: Throwable) {
-                //get 실패(서버통신 오류)
-                Log.e("asdf", "message : " + t.message)
-            }
-        })
     }
 }
 
