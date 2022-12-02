@@ -17,11 +17,11 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.vm = viewModel
-
         binding.btnSignup.isEnabled = false
+
+        binding.vm = viewModel
         signupBtnOnClick()
-        checkBtn()
+        setObserver()
     }
 
     private fun signupBtnOnClick() {
@@ -32,15 +32,21 @@ class SignUpActivity : AppCompatActivity() {
                 binding.etName.text.toString()
             )
         }
+    }
+    private fun setObserver(){
         viewModel.signupResult.observe(this) {
             startActivity(Intent(this@SignUpActivity, SignInActivity::class.java)) //화면전환
             finish()
         }
         viewModel.idLiveData.observe(this) {
-            binding.tvIdWarn.isVisible = !it
+            binding.tvIdWarn.isVisible = !it //it은 LiveData의 value
         }
         viewModel.pwLiveData.observe(this) {
             binding.tvPwWarn.isVisible = !it
         }
+        viewModel.btnLiveData.observe(this) {
+            binding.btnSignup.isEnabled = it
+        }
     }
+
 }

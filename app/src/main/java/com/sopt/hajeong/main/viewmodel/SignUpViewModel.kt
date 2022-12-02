@@ -1,10 +1,7 @@
 package com.sopt.hajeong.main.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.sopt.hajeong.data.api.ApiFactory
 import com.sopt.hajeong.data.api.ApiFactory.authService
 import com.sopt.hajeong.data.model.RequestSignupDTO
@@ -33,7 +30,26 @@ class SignUpViewModel : ViewModel() {
         val result = checkPw(inputPw)
         result
     }
+   /* val nameLiveData: LiveData<Boolean> =Transformations.map(inputName) { inputName ->
+        val result= checkName(inputName)
+        result
+    }*/
 
+    val btnLiveData = MediatorLiveData<Boolean>().apply {
+        addSource(idLiveData) {
+            this.value = isButtonActive()
+        }
+        addSource(pwLiveData) {
+            this.value = isButtonActive()
+        }
+    }
+    private fun isButtonActive(): Boolean {
+        return (
+                (idLiveData.value == true) && (pwLiveData.value == true)
+                )
+    }
+
+    //서버에 회원가입 요청
     fun signup(email: String, pw: String, name: String) {
         authService.signup(
             RequestSignupDTO(email, pw, name)
@@ -54,7 +70,7 @@ class SignUpViewModel : ViewModel() {
         })
     }
 
-    //정규표현식
+    //정규표현식 통한 id,pw 유효성 검사 함수
     private fun checkId(id: String): Boolean {
         Log.d("아이디", id)
         val regex = Regex("^[a-zA-Z0-9]{6,10}$")
@@ -65,4 +81,11 @@ class SignUpViewModel : ViewModel() {
         val regexWithNumAndEngAndSpecificWord = Regex("^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#\$%^&*(),.?\":{}|<>]).{6,12}$")
         return pw.matches(regexWithNumAndEngAndSpecificWord) || pw.isEmpty()
     }
+
+    /*private fun checkName(name: String): Boolean {
+        if (name.length in 1..10) {
+            return true
+        }
+        return false
+    }*/
 }
