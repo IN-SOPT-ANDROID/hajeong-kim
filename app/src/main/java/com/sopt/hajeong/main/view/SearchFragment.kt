@@ -1,15 +1,15 @@
-package com.sopt.hajeong.main
+package com.sopt.hajeong.main.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import org.sopt.sample.databinding.FragmentGalleryBinding
+import org.sopt.sample.databinding.FragmentSearchBinding
 
-class GalleryFragment : Fragment() {
-    private var _binding: FragmentGalleryBinding? = null
-    private val binding: FragmentGalleryBinding
+class SearchFragment : Fragment() {
+    private var _binding: FragmentSearchBinding? = null
+    private val binding: FragmentSearchBinding
         get() = _binding!!
 
     override fun onCreateView(
@@ -17,7 +17,7 @@ class GalleryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentGalleryBinding.inflate(inflater, container, false)
+        _binding = FragmentSearchBinding.inflate(inflater, container, false)
         return binding.root
     }
 

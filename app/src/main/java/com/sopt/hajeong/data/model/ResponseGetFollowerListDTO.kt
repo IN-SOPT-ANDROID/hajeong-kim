@@ -1,4 +1,4 @@
-package com.sopt.hajeong.data
+package com.sopt.hajeong.data.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
