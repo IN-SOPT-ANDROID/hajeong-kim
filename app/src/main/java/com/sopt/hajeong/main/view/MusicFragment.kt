@@ -5,9 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import com.sopt.hajeong.main.adapter.MusicAdapter
+import com.sopt.hajeong.main.viewmodel.MusicViewModel
 import org.sopt.sample.databinding.FragmentSearchBinding
 
-class SearchFragment : Fragment() {
+class MusicFragment : Fragment() {
+    private val musicViewModel by viewModels<MusicViewModel>()
     private var _binding: FragmentSearchBinding? = null
     private val binding: FragmentSearchBinding
         get() = _binding!!
@@ -23,10 +27,8 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        musicViewModel.getMusic()
+        val adapter = MusicAdapter()
+        binding.rvMusicList.adapter = adapter
     }
 }

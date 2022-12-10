@@ -48,5 +48,4 @@ class SignUpActivity : AppCompatActivity() {
             binding.btnSignup.isEnabled = it
         }
     }
-
 }
