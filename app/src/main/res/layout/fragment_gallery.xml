@@ -10,17 +10,4 @@
         android:text="GalleryFragment"
         android:gravity="center" />
 
-
-    <ImageView
-        android:id="@+id/img_sample"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:src="@drawable/cat"/>
-
-    <Button
-        android:id="@+id/btn_get_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-
 </FrameLayout>

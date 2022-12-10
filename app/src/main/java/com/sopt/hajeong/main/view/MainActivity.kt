@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.menu_home -> transaction.replace(R.id.home, HomeFragment())
                 R.id.menu_gallery -> transaction.replace(R.id.home, GalleryFragment())
-                R.id.menu_search -> transaction.replace(R.id.home, SearchFragment())
+                R.id.menu_search -> transaction.replace(R.id.home, MusicFragment())
                 else -> error("item id :${it.itemId}) is cannot be selected")
             }
             transaction.commit()

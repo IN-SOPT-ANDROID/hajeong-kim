@@ -23,14 +23,13 @@ class SignUpViewModel : ViewModel() {
 
     val idLiveData: LiveData<Boolean> = Transformations.map(inputId) { inputId ->
         val result = checkId(inputId)
-        Log.d("아이디", result.toString())
         result
     }
     val pwLiveData: LiveData<Boolean> = Transformations.map(inputPw) { inputPw ->
         val result = checkPw(inputPw)
         result
     }
-   /* val nameLiveData: LiveData<Boolean> =Transformations.map(inputName) { inputName ->
+   /*private val nameLiveData: LiveData<Boolean> =Transformations.map(inputName) { inputName ->
         val result= checkName(inputName)
         result
     }*/
@@ -72,7 +71,6 @@ class SignUpViewModel : ViewModel() {
 
     //정규표현식 통한 id,pw 유효성 검사 함수
     private fun checkId(id: String): Boolean {
-        Log.d("아이디", id)
         val regex = Regex("^[a-zA-Z0-9]{6,10}$")
         return id.matches(regex) || id.isEmpty()
     }
